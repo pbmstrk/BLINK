@@ -345,6 +345,7 @@ def run(
     faiss_indexer=None,
     test_data=None,
 ):
+    local_id2wikipedia_id = {v: k for k, v in wikipedia_id2local_id.items()}
 
     if not test_data and not args.test_mentions and not args.interactive:
         msg = (
@@ -471,7 +472,7 @@ def run(
                     sample_prediction = []
                     for e_id in entity_list:
                         #e_title = id2title[e_id]
-                        sample_prediction.append(e_id)
+                        sample_prediction.append(local_id2wikipedia_id[e_id])
                     predictions.append(sample_prediction)
 
                 # use only biencoder
@@ -542,7 +543,7 @@ def run(
                 for index in index_list:
                     e_id = entity_list[index]
                     #e_title = id2title[e_id]
-                    sample_prediction.append(e_id)
+                    sample_prediction.append(local_id2wikipedia_id[e_id])
                     sample_scores.append(scores_list[index])
                 predictions.append(sample_prediction)
                 scores.append(sample_scores)
