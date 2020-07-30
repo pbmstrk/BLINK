@@ -470,8 +470,8 @@ def run(
                 for entity_list in nns:
                     sample_prediction = []
                     for e_id in entity_list:
-                        e_title = id2title[e_id]
-                        sample_prediction.append(e_title)
+                        #e_title = id2title[e_id]
+                        sample_prediction.append(e_id)
                     predictions.append(sample_prediction)
 
                 # use only biencoder
@@ -541,8 +541,8 @@ def run(
                 sample_scores = []
                 for index in index_list:
                     e_id = entity_list[index]
-                    e_title = id2title[e_id]
-                    sample_prediction.append(e_title)
+                    #e_title = id2title[e_id]
+                    sample_prediction.append(e_id)
                     sample_scores.append(scores_list[index])
                 predictions.append(sample_prediction)
                 scores.append(sample_scores)
