@@ -234,6 +234,7 @@ def _process_biencoder_dataloader(samples, tokenizer, biencoder_params):
 
 
 def _run_biencoder(biencoder, dataloader, candidate_encoding, top_k=100, indexer=None):
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     biencoder.model.eval()
     labels = []
     nns = []
@@ -242,7 +243,7 @@ def _run_biencoder(biencoder, dataloader, candidate_encoding, top_k=100, indexer
         context_input, _, label_ids = batch
         with torch.no_grad():
             if indexer is not None:
-                context_encoding = biencoder.encode_context(context_input).numpy()
+                context_encoding = biencoder.encode_context(context_input.to(device)).numpy()
                 context_encoding = np.ascontiguousarray(context_encoding)
                 scores, indicies = indexer.search_knn(context_encoding, top_k)
             else:
@@ -412,6 +413,8 @@ def run(
 
         # run biencoder
         #logger.info("run biencoder")
+        device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        biencoder.to(device)
         top_k = args.top_k
         labels, nns, scores = _run_biencoder(
             biencoder, dataloader, candidate_encoding, top_k, faiss_indexer
