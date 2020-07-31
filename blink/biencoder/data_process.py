@@ -118,10 +118,8 @@ def process_mention_data(
     if debug:
         samples = samples[:200]
 
-    if silent:
-        iter_ = samples
-    else:
-        iter_ = tqdm(samples)
+    
+    iter_ = samples
 
     use_world = True
 

@@ -26,7 +26,7 @@ def prepare_crossencoder_mentions(
 
     context_input_list = []  # samples X 128
 
-    for sample in tqdm(samples):
+    for sample in samples:
         context_tokens = data.get_context_representation(
             sample,
             tokenizer,
