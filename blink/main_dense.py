@@ -273,7 +273,7 @@ def _run_crossencoder(crossencoder, dataloader, logger, context_len, device="cpu
     accuracy = 0.0
     crossencoder.to(device)
 
-    res = evaluate(crossencoder, dataloader, device, logger, context_len, silent=False)
+    res = evaluate(crossencoder, dataloader, device, logger, context_len, silent=True)
     accuracy = res["normalized_accuracy"]
     logits = res["logits"]
 
@@ -382,7 +382,6 @@ def run(
             _print_colorful_text(text, samples)
 
         else:
-            logger.info("test dataset mode")
 
             if test_data:
                 samples = test_data
@@ -406,13 +405,13 @@ def run(
         )
 
         # prepare the data for biencoder
-        logger.info("preparing data for biencoder")
+        #logger.info("preparing data for biencoder")
         dataloader = _process_biencoder_dataloader(
             samples, biencoder.tokenizer, biencoder_params
         )
 
         # run biencoder
-        logger.info("run biencoder")
+        #logger.info("run biencoder")
         top_k = args.top_k
         labels, nns, scores = _run_biencoder(
             biencoder, dataloader, candidate_encoding, top_k, faiss_indexer
@@ -462,8 +461,6 @@ def run(
                 # plt.plot(x, y)
                 biencoder_accuracy = y[0]
                 recall_at = y[-1]
-                print("biencoder accuracy: %.4f" % biencoder_accuracy)
-                print("biencoder recall@%d: %.4f" % (top_k, y[-1]))
 
             if args.fast:
 
