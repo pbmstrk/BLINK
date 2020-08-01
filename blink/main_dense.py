@@ -317,6 +317,11 @@ def load_models(args, logger=None):
         args.entity_catalogue, args.entity_encoding, faiss_index=args.faiss_index, index_path=args.index_path, logger=logger
     )
 
+    local_id2wikipedia_id = {v: k for k, v in wikipedia_id2local_id.items()}
+    if True:
+        with open('local_id2wikipedia_id.json') as json_file:
+            json.dump(local_id2wikipedia_id, json_file, indent=4)
+
     return (
         biencoder,
         biencoder_params,
@@ -346,7 +351,7 @@ def run(
     faiss_indexer=None,
     test_data=None,
 ):
-    local_id2wikipedia_id = {v: k for k, v in wikipedia_id2local_id.items()}
+    
 
     if not test_data and not args.test_mentions and not args.interactive:
         msg = (
