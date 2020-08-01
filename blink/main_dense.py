@@ -319,7 +319,7 @@ def load_models(args, logger=None):
 
     local_id2wikipedia_id = {v: k for k, v in wikipedia_id2local_id.items()}
     if True:
-        with open('local_id2wikipedia_id.json') as json_file:
+        with open('local_id2wikipedia_id.json', 'w') as json_file:
             json.dump(local_id2wikipedia_id, json_file, indent=4)
 
     return (
